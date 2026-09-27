@@ -25,10 +25,7 @@ if not st.session_state.authenticated:
 st.title(" AI論文アシスタント")
 st.write("画像をアップロードすると、模範論文のスタイルに合わせて自動でリライトします。")
 
-# 模範論文の設定
-reference_essay = """
-（ここに模範論文のテキストを貼り付けてください）
-"""
+
 
 # 画像アップロードボタン
 uploaded_file = st.file_uploader("画像を一つ選択してください", type=["jpg", "jpeg", "png"])
@@ -38,6 +35,7 @@ if uploaded_file is not None:
     st.image(image, caption="ターゲット画像", use_container_width=True)
     
     # 実行ボタン
+    reference_essay =st.text_area('お手本となる模範論文をここに貼り付けてください', height=300)
     if st.button("AIで解析＆リライトを実行"):
         with st.spinner("Googleの最新モデル（Gemini 3.8）が解析中..."):
             # APIキーはセキュリティのため裏側から読み込む
