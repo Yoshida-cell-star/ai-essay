@@ -56,11 +56,20 @@ if uploaded_file is not None:
             2. 【模範論文風にリライトした完成版】
             """
             
-            # AIの実行
+            try:
             response = client.models.generate_content(
                 model='gemini-3.8-flash',
                 contents=[prompt, image]
             )
+        except Exception as e:
+            st.warning("現在AIサーバーが混雑しています。3秒後に自動で再接続します...")
+            import time
+            time.sleep(3)
+            response = client.models.generate_content(
+                model='gemini-3.8-flash',
+                contents=[prompt, image]
+            )
+
             
             st.success("解析完了！")
             st.markdown("### 出力結果")
